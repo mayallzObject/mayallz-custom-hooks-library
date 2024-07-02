@@ -5,11 +5,4 @@ build
 public
 
 
-# Ignore GitHub Actions workflows
-.github/
 
-# Ignore Rollup config
-.rollup.config.js
-
-# Ignore Markdown files
-*.md
