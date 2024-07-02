@@ -3,29 +3,42 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - '**'
   pull_request:
     branches:
-      - main
+      - '**'
 
 jobs:
-  lint-and-format:
+  build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
+      - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run ESLint
+      - name: Lint code
         run: npm run lint
 
-      - name: Run Prettier
+      - name: Run Prettier to fix formatting issues
+        run: npm run format
+
+      - name: Check code formatting
         run: npm run format:check
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build project
+        run: npm run build
