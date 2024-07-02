@@ -31,6 +31,9 @@ jobs:
       - name: Lint code
         run: npm run lint
 
+      - name: Run Prettier to fix formatting issues
+        run: npm run format
+
       - name: Check code formatting
         run: npm run format:check
 
